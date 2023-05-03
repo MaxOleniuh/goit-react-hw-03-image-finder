@@ -12,22 +12,13 @@ class App extends Component {
     query: "",
     isLoading: false,
   };
-
-  static getDerivedStateFromProps(props, state) {
-    const { query } = props;
-    if (query !== state.query) {
-      return { page: 1, query, images: [] };
-    }
-    return null;
-  }
-
   getSnapshotBeforeUpdate() {
     return document.body.clientHeight - 75.63;
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (
-      (prevProps.query !== this.props.query && this.props.query) ||
+      (prevState.query !== this.state.query && this.state.query) ||
       prevState.page !== this.state.page
     ) {
       this.getSearchedImages();
@@ -45,7 +36,7 @@ class App extends Component {
   getSearchedImages = async () => {
     this.setState({ isLoading: true });
     try {
-      const data = await fetchImages(this.props.query, this.state.page);
+      const data = await fetchImages(this.state.query, this.state.page);
       this.setState((prev) => ({ images: [...prev.images, ...data.hits] }));
     } catch (error) {
       this.setState({ error: error.message });
@@ -56,16 +47,29 @@ class App extends Component {
    setQuery = (query) => {
     this.setState({ query });
   };
-  
+    changePage = () => {
+    this.setState((prev) => ({ page: prev.page + 1 }));
+  };
+   openModal = (dataModal) => {
+    this.setState({ dataModal });
+  };
+
+  closeModal = () => {
+    this.setState({ dataModal: null });
+  };
+
+  toggleModal = (dataModal = null) => {
+    this.setState({ dataModal });
+  };
   render() {
-    const { images } = this.state;
+    const { images, isLoading } = this.state;
       return(
         <>
           <Searchbar setQuery={this.setQuery} query={this.state.query}/>
           <ImageGallery images={images} />
-          <Loader />
-          <Button />
-          <Modal/>
+          {isLoading && <Loader />}
+          <Button onClick={this.changePage}/>
+          <Modal modalData={dataModal}/>
         </>
   );
   }
