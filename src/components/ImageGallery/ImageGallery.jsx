@@ -1,8 +1,9 @@
-import ImageGalleryItem from "components/ImageGallertItem/ImageGalleryItem";
+import ImageGalleryItem from "components/ImageGalleryItem/ImageGalleryItem";
+import { ListStyled } from './ImageGallery.styled';
 const ImageGallery = ({images}) => {
   return (
-    <ul>{images.map((({webformatURL, id}) => <ImageGalleryItem key={id} webformatURL={webformatURL} />))}
-     </ul>
+    <ListStyled>{images.map((({webformatURL, id}) => <ImageGalleryItem key={id} webformatURL={webformatURL} />))}
+     </ListStyled>
    )
 }
 export default ImageGallery;

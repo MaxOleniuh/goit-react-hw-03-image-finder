@@ -10,7 +10,8 @@ class App extends Component {
     images: [],
     page: 1, 
     query: "",
-    isLoading: false,
+     isLoading: false,
+    dataModal: null,
   };
   getSnapshotBeforeUpdate() {
     return document.body.clientHeight - 75.63;
@@ -24,7 +25,7 @@ class App extends Component {
       this.getSearchedImages();
     }
 
-    if (prevState.news !== this.state.news && this.state.page !== 1) {
+    if (prevState.images !== this.state.images && this.state.page !== 1) {
       console.log("scroll");
       window.scrollTo({
         top: snapshot,
@@ -69,7 +70,7 @@ class App extends Component {
           <ImageGallery images={images} />
           {isLoading && <Loader />}
           <Button onClick={this.changePage}/>
-          <Modal modalData={dataModal}/>
+          <Modal modalData={this.dataModal} closeModal={this.toggleModal} />
         </>
   );
   }

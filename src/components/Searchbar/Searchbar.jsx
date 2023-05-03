@@ -1,5 +1,6 @@
 import { Component } from "react";
-
+import {SearchbarStyled, FormStyled, ButtonStyled, InputStyled} from './Searchbar.styled';
+import { FcSearch } from 'react-icons/fc';
 class Searchbar extends Component {
   state = {
     input: "",
@@ -8,18 +9,16 @@ class Searchbar extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.setQuery(this.state.input);
-    console.log(1)
   };
 
   render() {
     return (   
-    <header className="searchbar">
-  <form className="form"  onSubmit={this.handleSubmit}>
-    <button type="submit" className="button">
-      <span className="button-label">Search</span>
-    </button>
-
-    <input
+    <SearchbarStyled>
+  <FormStyled onSubmit={this.handleSubmit}>
+    <ButtonStyled type="submit" className="button">
+      <FcSearch size='2em'/>
+    </ButtonStyled>
+             <InputStyled
       onChange={(e) => this.setState({ input: e.target.value })}
       value={this.state.input}
       className="input"
@@ -28,10 +27,11 @@ class Searchbar extends Component {
       autoFocus
       placeholder="Search images and photos"
     />
-  </form>
-</header>
+    </FormStyled>
+</SearchbarStyled>
     );
   }
 }
 
 export default Searchbar;
+// FcSearch
