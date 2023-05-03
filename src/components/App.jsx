@@ -51,8 +51,8 @@ class App extends Component {
     changePage = () => {
     this.setState((prev) => ({ page: prev.page + 1 }));
   };
-   openModal = (dataModal) => {
-    this.setState({ dataModal });
+   openModal = (image, alt) => {
+     this.setState(({ isModalOpen }) => ({ isModalOpen: !isModalOpen, dataModal: {image, alt}}));
   };
 
   closeModal = () => {
@@ -63,14 +63,14 @@ class App extends Component {
     this.setState({ dataModal });
   };
   render() {
-    const { images, isLoading } = this.state;
+    const { images, isLoading, dataModal, openModal } = this.state;
       return(
         <>
           <Searchbar setQuery={this.setQuery} query={this.state.query}/>
-          <ImageGallery images={images} />
+          <ImageGallery images={images} openModal={this.toggleModal}/>
           {isLoading && <Loader />}
-          <Button onClick={this.changePage}/>
-          <Modal modalData={this.dataModal} closeModal={this.toggleModal} />
+          {images.length > 0 && <Button onClick={this.changePage}/>}
+          {dataModal && <Modal modalData={dataModal} closeModal={this.toggleModal} openModal={openModal} />}
         </>
   );
   }

@@ -1,7 +1,7 @@
 import { ItemStyled, ImageStyled } from './ImageGalleryItem.styled';
-const ImageGalleryItem = ({ webformatURL }) => {
+const ImageGalleryItem = ({ webformatURL, openModal }) => {
   return (
-    <ItemStyled className="gallery-item">
+    <ItemStyled onClick={() => openModal({webformatURL})}>
       <ImageStyled src={webformatURL} alt='' />
     </ItemStyled>
   );
