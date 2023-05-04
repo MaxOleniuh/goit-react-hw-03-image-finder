@@ -1,8 +1,8 @@
 import { ItemStyled, ImageStyled } from './ImageGalleryItem.styled';
-const ImageGalleryItem = ({ webformatURL, openModal }) => {
+const ImageGalleryItem = ({ webformatURL, openModal, tags, largeImageURL }) => {
   return (
-    <ItemStyled onClick={() => openModal({webformatURL})}>
-      <ImageStyled src={webformatURL} alt='' />
+    <ItemStyled onClick={() => openModal(largeImageURL, tags)}>
+      <ImageStyled src={webformatURL} alt={tags} />
     </ItemStyled>
   );
 };

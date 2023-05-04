@@ -12,7 +12,7 @@ const Loader = () => {
   wrapperStyle={{}}
   wrapperClass=""
   visible={true}
-/>
+/>   
        </LoaderStyled> 
     )
 }

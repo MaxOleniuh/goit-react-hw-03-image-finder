@@ -11,21 +11,26 @@ class App extends Component {
     page: 1, 
     query: "",
      isLoading: false,
-    dataModal: null,
+     dataModal: {image: '', alt: ''},
+    isModalOpen: false,
   };
+  
   getSnapshotBeforeUpdate() {
     return document.body.clientHeight - 75.63;
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log(prevState.query !== this.state.query)
     if (
-      (prevState.query !== this.state.query && this.state.query) ||
+      (prevState.query !== this.state.query && this.state.query !== '') || 
       prevState.page !== this.state.page
     ) {
+      // this.state.query === '' ? this.setState({ images: [] }) : this.getSearchedImages(this.state.query) 
+      // this.setState({ isLoading: true, page: 1 })
       this.getSearchedImages();
     }
 
-    if (prevState.images !== this.state.images && this.state.page !== 1) {
+    if (prevState.images.length !== this.state.images.length && this.state.page !== 1) {
       console.log("scroll");
       window.scrollTo({
         top: snapshot,
@@ -35,18 +40,41 @@ class App extends Component {
   }
 
   getSearchedImages = async () => {
-    this.setState({ isLoading: true });
+    // this.setState({ isLoading: true});
     try {
       const data = await fetchImages(this.state.query, this.state.page);
       this.setState((prev) => ({ images: [...prev.images, ...data.hits] }));
+      // this.setState({ images: data.hits });
     } catch (error) {
       this.setState({ error: error.message });
     } finally {
       this.setState({ isLoading: false });
     }
   };
+  // searchImages = async term => {
+  //   this.setState({ canLoadMore: false, isLoading: true, page: 1, term });
+  //   console.log('searching');
+  //   try {
+  //     const data = await fetchImagesWithQuery(term);
+  //     const images = data.hits;
+  //     const maxImages = data.totalHits;
+  //     console.log('images', images);
+  //     this.setState({
+  //       images,
+  //       canLoadMore:
+  //         images.length > 0 && images.length < maxImages ? true : false,
+  //     });
+  //   } catch (error) {
+  //     console.log('error: ', error);
+  //     this.setState({ error });
+  //   } finally {
+  //     console.log('finished searching');
+  //     this.setState({ isLoading: false });
+  //   }
+  // };
    setQuery = (query) => {
-    this.setState({ query });
+     this.setState({ query });
+     
   };
     changePage = () => {
     this.setState((prev) => ({ page: prev.page + 1 }));
@@ -55,22 +83,16 @@ class App extends Component {
      this.setState(({ isModalOpen }) => ({ isModalOpen: !isModalOpen, dataModal: {image, alt}}));
   };
 
-  closeModal = () => {
-    this.setState({ dataModal: null });
-  };
-
-  toggleModal = (dataModal = null) => {
-    this.setState({ dataModal });
-  };
   render() {
-    const { images, isLoading, dataModal, openModal } = this.state;
+    const { images, isLoading, dataModal, isModalOpen } = this.state;
+  console.log(this.state.query)
       return(
         <>  
           <Searchbar setQuery={this.setQuery} query={this.state.query}/>
-          <ImageGallery images={images} openModal={this.toggleModal}/>
+          <ImageGallery images={images} openModal={this.openModal}/>
           {isLoading && <Loader />}
           {images.length > 0 && <Button onClick={this.changePage}/>}
-          {dataModal && <Modal modalData={dataModal} closeModal={this.toggleModal} openModal={openModal} />}
+          {isModalOpen && <Modal modalData={dataModal} closeModal={this.openModal} />}
         </>
   );
   }
