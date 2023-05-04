@@ -1,17 +1,19 @@
-
+import {LoaderStyled} from './Loader.styled'
 import { TailSpin } from 'react-loader-spinner';
 const Loader = () => {
     return (
-        <TailSpin
+       <LoaderStyled>
+            <TailSpin
   height="80"
   width="80"
-  color="#4fa94d"
+  color="#1e5187"
   ariaLabel="tail-spin-loading"
   radius="1"
   wrapperStyle={{}}
   wrapperClass=""
   visible={true}
 />
+       </LoaderStyled> 
     )
 }
 export default Loader;

@@ -65,7 +65,7 @@ class App extends Component {
   render() {
     const { images, isLoading, dataModal, openModal } = this.state;
       return(
-        <>
+        <>  
           <Searchbar setQuery={this.setQuery} query={this.state.query}/>
           <ImageGallery images={images} openModal={this.toggleModal}/>
           {isLoading && <Loader />}
