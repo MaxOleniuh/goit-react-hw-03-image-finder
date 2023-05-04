@@ -1,4 +1,5 @@
-import {ButtonStyled} from './Button.styled'
+import PropTypes from 'prop-types';
+import { ButtonStyled } from './Button.styled'
 const Button = ({ onClick = null }) => {
   return (
     <ButtonStyled type="button" onClick={onClick}>
@@ -7,4 +8,7 @@ const Button = ({ onClick = null }) => {
   );
 };
 
+Button.propTypes = {
+  onClick: PropTypes.func.isRequired,
+}
 export default Button;
