@@ -73,7 +73,7 @@ class App extends Component {
   //   }
   // };
    setQuery = (query) => {
-     this.setState({ query });
+     this.setState({ query, page: 1, images: [] });
      
   };
     changePage = () => {
