@@ -23,7 +23,7 @@ class Modal extends Component {
 
 
   render() {
-    const { image, alt } = this.props.modalData
+    const { image, alt } = this.props.modalData;
     return createPortal(
       <OverlayStyled onClick={this.handleBackdropClick}>
       <ModalStyled>
@@ -38,7 +38,8 @@ class Modal extends Component {
   }
 }
 Modal.propTypes = {
-  image: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
+  image: PropTypes.string,
+  alt: PropTypes.string,
+  modalData: PropTypes.object.isRequired,
 }
 export default Modal;
