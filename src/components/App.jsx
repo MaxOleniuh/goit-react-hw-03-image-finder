@@ -40,7 +40,7 @@ class App extends Component {
   }
 
   getSearchedImages = async () => {
-    // this.setState({ isLoading: true});
+    this.setState({ isLoading: true});
     try {
       const data = await fetchImages(this.state.query, this.state.page);
       this.setState((prev) => ({ images: [...prev.images, ...data.hits] }));
@@ -91,7 +91,7 @@ class App extends Component {
           <Searchbar setQuery={this.setQuery} query={this.state.query}/>
           <ImageGallery images={images} openModal={this.openModal}/>
           {isLoading && <Loader />}
-          {images.length > 0 && <Button onClick={this.changePage}/>}
+          {images.length >= 12 && <Button onClick={this.changePage}/>}
           {isModalOpen && <Modal modalData={dataModal} closeModal={this.openModal} />}
         </>
   );
