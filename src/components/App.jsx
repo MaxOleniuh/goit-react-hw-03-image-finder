@@ -25,8 +25,6 @@ class App extends Component {
       (prevState.query !== this.state.query && this.state.query !== '') || 
       prevState.page !== this.state.page
     ) {
-      // this.state.query === '' ? this.setState({ images: [] }) : this.getSearchedImages(this.state.query) 
-      // this.setState({ isLoading: true, page: 1 })
       this.getSearchedImages();
     }
 
@@ -51,27 +49,7 @@ class App extends Component {
       this.setState({ isLoading: false });
     }
   };
-  // searchImages = async term => {
-  //   this.setState({ canLoadMore: false, isLoading: true, page: 1, term });
-  //   console.log('searching');
-  //   try {
-  //     const data = await fetchImagesWithQuery(term);
-  //     const images = data.hits;
-  //     const maxImages = data.totalHits;
-  //     console.log('images', images);
-  //     this.setState({
-  //       images,
-  //       canLoadMore:
-  //         images.length > 0 && images.length < maxImages ? true : false,
-  //     });
-  //   } catch (error) {
-  //     console.log('error: ', error);
-  //     this.setState({ error });
-  //   } finally {
-  //     console.log('finished searching');
-  //     this.setState({ isLoading: false });
-  //   }
-  // };
+
    setQuery = (query) => {
      this.setState({ query, page: 1, images: [] });
      
